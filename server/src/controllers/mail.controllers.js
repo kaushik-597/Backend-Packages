@@ -3,7 +3,7 @@ import asyncHandler from "../utils/asyncHandler.js";
 import { sendMail } from "../utils/mailer.js";
 
 export const sendTestMail = asyncHandler(async (req, res) => {
-  const { to, subject, text, html } = req.body;
+  const { to, subject, text, html } = req.validatedData;
   const info = await sendMail({
     to,
     subject,

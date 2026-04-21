@@ -12,7 +12,7 @@ export const validate = (schema) => {
         })),
       });
     }
-    req.body = result.data;
+    req.validatedData = result.data;
     next();
   };
 };
