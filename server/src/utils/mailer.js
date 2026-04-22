@@ -15,7 +15,7 @@ export const verifyMailer = async () => {
 
 export const sendMail = async ({ to, subject, text, html }) => {
   const info = await transporter.sendMail({
-    from: `"My App" <${process.env.MAIL_USER}>`,
+    from: `"Flow Notes" <${process.env.MAIL_USER}>`,
     to,
     subject,
     text,
