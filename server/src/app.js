@@ -1,9 +1,11 @@
 import express from "express";
 import mailRouter from "./routes/mail.routes.js";
+import helmet from "helmet";
 
 const app = express();
 
 app.use(express.json());
+app.use(helmet());
 
 app.use("/api/v1/mail", mailRouter);
 
