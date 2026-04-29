@@ -1,6 +1,7 @@
 import express from "express";
 import mailRouter from "./routes/mail.routes.js";
 import helmet from "helmet";
+import cors from "cors";
 
 const app = express();
 
