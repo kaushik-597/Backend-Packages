@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { mailAPI } from "../../api/mailAPI";
 
 function Mail() {
   const [form, setForm] = useState({
@@ -11,9 +12,15 @@ function Mail() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    console.log("Form submitted:", form);
+    try {
+      const res = await mailAPI.send(form);
+      console.log("Form submitted:", res);
+    } catch (err) {
+      console.log(err.message);
+    }
+
     setForm({
       to: "",
       subject: "",
