@@ -2,6 +2,7 @@ import express from "express";
 import mailRouter from "./routes/mail.routes.js";
 import helmet from "helmet";
 import cors from "cors";
+import compression from "compression";
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.use(
 );
 app.use(express.json());
 app.use(helmet());
+app.use(compression());
 
 app.use("/api/v1/mail", mailRouter);
 
