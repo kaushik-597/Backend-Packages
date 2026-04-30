@@ -4,6 +4,7 @@ import helmet from "helmet";
 import cors from "cors";
 import compression from "compression";
 import hpp from "hpp";
+import mongoSanitize from "express-mongo-sanitize";
 
 const app = express();
 
@@ -19,6 +20,7 @@ app.use(express.json());
 app.use(helmet());
 app.use(compression());
 app.use(hpp());
+app.use(mongoSanitize());
 
 app.use("/api/v1/mail", mailRouter);
 
