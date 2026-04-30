@@ -20,7 +20,7 @@ app.use(express.json());
 app.use(helmet());
 app.use(compression());
 app.use(hpp());
-app.use(mongoSanitize());
+// app.use(mongoSanitize());
 
 app.use("/api/v1/mail", mailRouter);
 
