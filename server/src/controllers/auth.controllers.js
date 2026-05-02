@@ -31,7 +31,7 @@ export const login = asyncHandler(async (req, res) => {
     throw new ApiError(401, "Invalid Credentials");
   }
 
-  const loggedInUser = {
+  req.session.user = {
     _id: user._id,
     fullname: user.fullname,
     email: user.email,
@@ -57,6 +57,10 @@ export const login = asyncHandler(async (req, res) => {
   //       "User LoggedIn Successfully",
   //     ),
   //   );
+
+  return res
+    .status(200)
+    .json(new ApiResponse(200, req.session.user, "LogIn Successful"));
 });
 
 export const logout = asyncHandler(async (req, res) => {
@@ -71,4 +75,10 @@ export const logout = asyncHandler(async (req, res) => {
   //   .status(200)
   //   .clearCookie("accessToken", options)
   //   .json(new ApiResponse(200, {}, "User logged out successfully"));
+
+  req.session.destroy((err) => {
+    if (err) throw new ApiError(500, "Logout Failed");
+    res.clearCookie("connect.sid");
+    res.json(new ApiResponse(200, {}, "User logged out successfully"));
+  });
 });
