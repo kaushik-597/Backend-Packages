@@ -4,8 +4,7 @@ export const userBaseSchema = z.object({
   fullname: z
     .string()
     .trim()
-    .min(6, "Fullname must be at least 6 characters long...")
-    .max(25),
+    .min(6, "Fullname must be at least 6 characters long..."),
   email: z.string().trim().email("Valid Email is required"),
   password: z
     .string()

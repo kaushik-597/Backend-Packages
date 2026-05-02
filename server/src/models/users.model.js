@@ -8,13 +8,11 @@ const userSchema = mongoose.Schema(
       type: String,
       required: [true, "Fullname is needed"],
       minlength: 6,
-      maxlength: 25,
       trim: true,
     },
     email: {
       type: String,
       required: [true, "Username is needed"],
-      maxlength: 25,
       unique: true,
       trim: true,
       lowercase: true,
@@ -30,10 +28,9 @@ const userSchema = mongoose.Schema(
   },
 );
 
-userSchema.pre("save", async function (next) {
-  if (!this.isModified("password")) return next();
+userSchema.pre("save", async function () {
+  if (!this.isModified("password")) return;
   this.password = await bcrypt.hash(this.password, 10);
-  next();
 });
 
 userSchema.methods.comparePassword = function (password) {
