@@ -31,12 +31,26 @@ export const login = asyncHandler(async (req, res) => {
     throw new ApiError(401, "Invalid Credentials");
   }
 
+  const loggedInUser = {
+    _id: user._id,
+    fullname: user.fullname,
+    email: user.email,
+  };
+  const accessToken = user.generateAccessToken();
+
+  const options = {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+  };
+
   return res
     .status(200)
+    .cookie("accessToken", accessToken, options)
     .json(
       new ApiResponse(
         200,
-        { fullname: user.fullname, email: user.email },
+        { user: loggedInUser, accessToken },
         "User LoggedIn Successfully",
       ),
     );
