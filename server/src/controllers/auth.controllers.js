@@ -24,11 +24,10 @@ export const login = asyncHandler(async (req, res) => {
   const { email, password } = req.validatedData;
 
   const user = await Users.findOne({ email });
-  if (!user) {
-    throw new ApiError(401, "Invalid Credentials");
-  }
 
-  if (user.password !== password) {
+  const isValid = user && (await user.comparePassword(password));
+
+  if (!isValid) {
     throw new ApiError(401, "Invalid Credentials");
   }
 
