@@ -7,6 +7,7 @@ import hpp from "hpp";
 import mongoSanitize from "express-mongo-sanitize";
 import session from "express-session";
 import MongoStore from "connect-mongo";
+import authRouter from "./routes/auth.routes.js";
 
 const app = express();
 
@@ -42,6 +43,7 @@ app.use(
 );
 
 app.use("/api/v1/mail", mailRouter);
+app.use("/api/v1/auth", authRouter);
 
 app.use((err, req, res, next) => {
   res.status(err.statusCode || 500).json({
