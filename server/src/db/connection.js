@@ -4,7 +4,7 @@ import mongoose from "mongoose";
 export const connectDB = async () => {
   try {
     const connectionInstance = await mongoose.connect(
-      `mongodb://localhost:27017/backendPackages`,
+      `${process.env.MONGO_URI}/backendPackages`,
     );
     console.log(
       chalk.yellow(`MongoDB Hostname: ${connectionInstance.connection.host}`),

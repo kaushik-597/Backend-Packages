@@ -36,22 +36,39 @@ export const login = asyncHandler(async (req, res) => {
     fullname: user.fullname,
     email: user.email,
   };
-  const accessToken = user.generateAccessToken();
 
-  const options = {
-    httpOnly: true,
-    secure: process.env.NODE_ENV === "production",
-    sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
-  };
+  //jwt - stateless auth
+  // const accessToken = user.generateAccessToken();
 
-  return res
-    .status(200)
-    .cookie("accessToken", accessToken, options)
-    .json(
-      new ApiResponse(
-        200,
-        { user: loggedInUser, accessToken },
-        "User LoggedIn Successfully",
-      ),
-    );
+  // const options = {
+  //   httpOnly: true,
+  //   secure: process.env.NODE_ENV === "production",
+  //   sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+  //   maxAge: 1 * 60 * 60 * 1000,
+  // };
+
+  // return res
+  //   .status(200)
+  //   .cookie("accessToken", accessToken, options)
+  //   .json(
+  //     new ApiResponse(
+  //       200,
+  //       { user: loggedInUser, accessToken },
+  //       "User LoggedIn Successfully",
+  //     ),
+  //   );
+});
+
+export const logout = asyncHandler(async (req, res) => {
+  //jwt - stateless auth
+  // const options = {
+  //   httpOnly: true,
+  //   secure: process.env.NODE_ENV === "production",
+  //   sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+  //   maxAge: 0,
+  // };
+  // res
+  //   .status(200)
+  //   .clearCookie("accessToken", options)
+  //   .json(new ApiResponse(200, {}, "User logged out successfully"));
 });

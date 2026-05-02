@@ -5,6 +5,8 @@ import cors from "cors";
 import compression from "compression";
 import hpp from "hpp";
 import mongoSanitize from "express-mongo-sanitize";
+import session from "express-session";
+import MongoStore from "connect-mongo";
 
 const app = express();
 
@@ -21,6 +23,23 @@ app.use(helmet());
 app.use(compression());
 app.use(hpp());
 // app.use(mongoSanitize());
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    store: MongoStore.create({
+      mongoUrl: process.env.MONGO_URI,
+      collectionName: "sessions",
+    }),
+    cookie: {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: process.env.NODE_ENV === "production" ? "none" : "lax",
+      maxAge: 1 * 60 * 60 * 1000,
+    },
+  }),
+);
 
 app.use("/api/v1/mail", mailRouter);
 
