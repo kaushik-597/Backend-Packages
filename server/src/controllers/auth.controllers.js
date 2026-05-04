@@ -35,6 +35,7 @@ export const login = asyncHandler(async (req, res) => {
     _id: user._id,
     fullname: user.fullname,
     email: user.email,
+    role: user.role,
   };
 
   //jwt - stateless auth
@@ -81,4 +82,10 @@ export const logout = asyncHandler(async (req, res) => {
     res.clearCookie("connect.sid");
     res.json(new ApiResponse(200, {}, "User logged out successfully"));
   });
+});
+
+export const getCurrentUser = asyncHandler(async (req, res) => {
+  return res
+    .status(200)
+    .json(new ApiResponse(200, req.session.user, "Current User Fetched"));
 });
